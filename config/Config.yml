@@ -1,0 +1,7 @@
+[
+  {
+    path: "/Downloads",
+    enabled: true,
+    rules: [{ type:"Move", filter: "/Downloads/**/*.*", to: "/Destination/" }],
+  },
+]
