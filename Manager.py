@@ -1,17 +1,16 @@
 from pathlib import Path
 from typing import Callable, List
-from Action import Action
-from ChainRule import ChainRule
-from Rule import Rule
+from action.Action import Action
+from rule.Rule import Rule
 
 
 class Manager:
-    def setRuleChain(self, chain: ChainRule):
-        self._chain = chain
+    def setRules(self, rules: List[Rule]):
+        self._rules = rules
 
     def run(self):
         files = self.searchInFolder()
-        rules = iter(self._chain)
+        rules = iter(self._rules)
 
         try:
             while True:

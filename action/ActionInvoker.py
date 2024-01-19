@@ -1,6 +1,6 @@
 from multiprocessing.pool import ThreadPool
 from threading import Lock
-from Action import Action
+from action.Action import Action
 
 
 from typing import Protocol

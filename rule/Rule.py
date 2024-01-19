@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 from typing import List, Set, Protocol
 
-from Action import Action
+from action.Action import Action
 
 
 class Rule(Protocol):
