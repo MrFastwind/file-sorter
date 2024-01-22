@@ -7,18 +7,16 @@ from rule.Rule import Rule
 
 
 class MoveRule(Rule):
-    def __init__(self, filter: str, destination: str):
-        self.filter = filter
+    def __init__(self, filter: Pattern, destination: str):
+        self.filter: Pattern = filter
         self.destination = destination
 
     def handle(self, files: Set[Path]) -> List[Action]:
         actions = []
-        pattern: Pattern = (
-            RegexPattern if RegexPattern.is_regex(self.filter) else GlobPattern
-        )
+        pattern: Pattern = self.filter
 
         for file in files:
-            if pattern.match(file, self.filter):
+            if pattern.match(file):
                 destination = Path(self.destination)
 
                 if destination.is_file():
