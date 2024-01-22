@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Dict, List, Protocol, Type
 from config.Site import Site
 from patterns.Pattern import GlobPattern, Pattern, RegexPattern
+from rule.DeleteRule import DeleteRule
 
 from rule.MoveRule import MoveRule
 from rule.Rule import Rule
@@ -39,7 +40,6 @@ class RuleParser:
             return MoveRule
         if class_name == "Delete":
             return DeleteRule
-            NotImplementedError("DeleteRule not implemented yet")
         if class_name == "Keep":
             NotImplementedError("KeepRule not implemented yet")
         if class_name == "Trash":
