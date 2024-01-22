@@ -1,4 +1,5 @@
-from Manager import Manager
+from logging import Logger
+from Manager import FolderManager, Manager
 from pathlib import Path
 import argparse
 
@@ -42,9 +43,15 @@ def main():
     config_file = args.config if args.config else getDefaultFile()
     config = ConfigLoader(config_file).get_config()
 
-    manager = Manager()
-    # run Manager
-    ...
+    reports = []
+
+    Logger.info("Starting FileSorter")
+
+    for site in config.sites:
+        manager = FolderManager()
+        manager.setFolder(Path(site.path))
+        manager.setRules(site.rules)
+        manager.run()
 
 
 if __name__ == "__main__":
