@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Callable, Generator, List
 from action import ActionInvoker
 from action.Action import Action
-from rule.Rule import Rule
+from rule.Rules import Rule
 
 
 class FolderManager:

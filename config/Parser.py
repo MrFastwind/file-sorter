@@ -2,10 +2,7 @@ from pathlib import Path
 from typing import Dict, List, Protocol, Type
 from config.Site import Site
 from patterns.Pattern import GlobPattern, Pattern, RegexPattern
-from rule.DeleteRule import DeleteRule
-
-from rule.MoveRule import MoveRule
-from rule.Rule import Rule
+from rule.Rules import Rule, DeleteRule, KeepRule, MoveRule, TrashRule
 
 
 class Parser(Protocol):
@@ -35,17 +32,14 @@ class RuleParser:
 
     @classmethod
     def __parseType(cls, class_name: str) -> Type[Rule]:
-        # TODO: Implement Rules
         if class_name == "Move":
             return MoveRule
         if class_name == "Delete":
             return DeleteRule
         if class_name == "Keep":
-            NotImplementedError("KeepRule not implemented yet")
+            return KeepRule
         if class_name == "Trash":
-            NotImplementedError("TrashRule not implemented yet")
-        if class_name == "Rename":
-            NotImplementedError("RenameRule not implemented yet")
+            return TrashRule
         return class_name
 
     @classmethod

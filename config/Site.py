@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List
 
-from rule.Rule import Rule
+from rule.Rules import Rule
 
 
 @dataclass
