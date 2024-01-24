@@ -1,7 +1,7 @@
+from dataclasses import dataclass
 import logging
 from pathlib import Path
 from typing import List
-from attr import dataclass
 from ruamel.yaml import YAML
 from config.Parser import SiteParser
 from config.Site import Site
@@ -13,15 +13,16 @@ class Config:
 
 
 class ConfigLoader:
-    def __init__(self, config: Path):
-        self.config = config
+    def __init__(self, config_path: Path):
+        self.config_path = config_path
+        self.config = None
 
     def __load_config(self):
-        cursor = YAML.compose_all(self.config, Loader=YAML.FullLoader)
+        cursor = YAML().load_all(self.config_path)
         self.config = Config(sites=[])
-        for i, site in enumerate(cursor):
+        for i, site in enumerate(next(cursor)):
             try:
-                self.config.sites.append(SiteParser.parse(site))
+                self.config.sites.append(SiteParser.parse(**site))
             except ValueError as e:
                 logging.error(f"Error while loading config of site {i}: {e}")
 

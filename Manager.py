@@ -1,4 +1,4 @@
-from logging import Logger
+import logging as Logger
 from pathlib import Path
 from typing import Callable, Generator, List
 from action import ActionInvoker

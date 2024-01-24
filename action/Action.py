@@ -2,7 +2,6 @@ from enum import Enum
 import os
 from pathlib import Path
 from typing import List, Protocol
-from attr import dataclass
 from send2trash import send2trash
 
 

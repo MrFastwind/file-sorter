@@ -1,4 +1,5 @@
 from pathlib import Path
+import sys
 from typing import Dict, List, Protocol, Type
 from config.Site import Site
 from patterns.Pattern import GlobPattern, Pattern, RegexPattern
@@ -25,10 +26,13 @@ class RuleParser:
     def parse(cls, type: str, **kwargs) -> Rule:
         if not type:
             raise ValueError("Invalid config format. Missing type")
-        class_name = cls.__parseType(kwargs)
+        class_name = cls.__parseType(type)
 
         ## try to crate a class with the type name = to obj_type, and use the attributes present inside obj
-        return cls.instantiate_class(type, kwargs)
+        class_ = class_name
+        if isinstance(class_name, str):
+            class_ = cls.__get_class(class_name)
+        return class_(**kwargs)
 
     @classmethod
     def __parseType(cls, class_name: str) -> Type[Rule]:
@@ -43,8 +47,8 @@ class RuleParser:
         return class_name
 
     @classmethod
-    def instantiate_class(cls, class_name: str, attributes: Dict[str, str]) -> Rule:
-        return class_name(**attributes)
+    def __get_class(class_name: str):
+        return getattr(sys.modules[__name__], class_name)
 
 
 class SiteParser:
@@ -55,7 +59,7 @@ class SiteParser:
         if cls.checkStructure(rules, path, enabled):
             site = Site(rules=[], path=path, enabled=enabled)
             for rule in rules:
-                site.rules.append(RuleParser.parseRule(rule))
+                site.rules.append(RuleParser.parse(**rule))
             return site
         raise ValueError("Invalid config format")
 
