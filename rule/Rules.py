@@ -10,11 +10,26 @@ from patterns.DestinationParser import DestinationParser
 
 class Rule(Protocol):
     def handle(self, files: Set[Path]) -> List[Action]:
+        """
+        Handle the given set of files and return a list of actions.
+        :param files: a set of Path objects representing the files to be handled
+        :return: a list of Action objects representing the actions to be taken
+        """
         ...
 
 
 class MoveRule(Rule):
-    def __init__(self, filter: Pattern, destination: str):
+    def __init__(self, filter: Pattern, destination: str | Path):
+        """
+        Initialize the object with the provided filter pattern and destination.
+
+        Parameters:
+            filter (Pattern): The filter pattern to be used.
+            destination (str): The destination string.
+
+        Returns:
+            None
+        """
         self.filter: Pattern = filter
         self.destination = destination
 
@@ -43,6 +58,14 @@ class MoveRule(Rule):
 
 class DelegateRule(Rule):
     def __init__(self, filter: Pattern, delegate: Callable[[Path], Type[Action]]):
+        """
+        Initializes the object with the given filter and delegate.
+
+        :param filter: The filter pattern to be used.
+        :type filter: Pattern
+        :param delegate: The delegate function to generate actions based on the path.
+        :type delegate: Callable[[Path], Type[Action]]
+        """
         self._filter = filter
         self._actionGenerator = delegate
 
