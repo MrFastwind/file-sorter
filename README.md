@@ -22,7 +22,7 @@ Running the main file will create a file in the user directory ~, with a default
   {
     path: "/path1",
     enabled: true,
-    rules: [{ type:"Move", filter: "**/*.*", to: "/path1/moved" }],
+    rules: [{ type:"Move", filter: "**/*.*", destination: "/path1/moved" }],
   },
   {
     path: "/path2",
